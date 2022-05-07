@@ -36,14 +36,17 @@ namespace ConsoleRoyale.Tests
         public void GetBalance_Should_Return_Correctly()
         {
             _player.DepositToWallet(10);
-
             Assert.AreEqual(10, _player.GetBalance());
+            Assert.AreEqual(_player.Balance, _player.GetBalance());
 
             _player.DepositToWallet(10);
             Assert.AreEqual(20, _player.GetBalance());
+            Assert.AreEqual(_player.Balance, _player.GetBalance());
+
 
             _player.DepositToWallet(5);
             Assert.AreEqual(25, _player.GetBalance());
+            Assert.AreEqual(_player.Balance, _player.GetBalance());
         }
 
         [TestMethod]
@@ -72,14 +75,16 @@ namespace ConsoleRoyale.Tests
         [TestMethod]
         public void Withdraw_Should_Fail_When_Given_Amount_Is_Negative()
         {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _player.Withdraw(-10));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _player.Withdraw(-10), $"The withdrawing amont cannot be below 0. Given amount: -10");
         }
 
         [TestMethod]
         public void Withdraw_Should_Fail_When_Amount_Is_Greater_Then_Current_Balance()
         {
             _player.DepositToWallet(100);
-            Assert.ThrowsException<ArgumentException>(() => _player.Withdraw(200));
+            Assert.ThrowsException<ArgumentException>(
+                () => _player.Withdraw(200), $"The given amount (200) is more than the wallet's balance (100)");
         }
     }
 }

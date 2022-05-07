@@ -1,12 +1,29 @@
 ﻿namespace ConsoleRoyale
 {
+    /// <summary>
+    /// Basic implementation of Player which can deposit, withdraw and give info of the balance available.
+    /// </summary>
     public class Player : IPlayer
     {
+        private const decimal DEFAULT_START_BALANCE = 0;
+
         private decimal _balance;
 
+        /// <summary>
+        /// Instane a new player.
+        /// </summary>
         public Player()
         {
-            _balance = 0;
+            _balance = DEFAULT_START_BALANCE;
+        }
+
+        /// <summary>
+        /// Instance a player with initial balance, i.e. each new player starts with 100 tokens
+        /// </summary>
+        /// <param name="initialBalance"></param>
+        public Player(decimal initialBalance)
+        {
+            _balance = initialBalance;
         }
 
         public decimal Balance { get => _balance; }
@@ -27,7 +44,9 @@
             return _balance;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Withdraw given amount from the player's waller
+        /// </summary>
         /// <param name="amount">Positive number that represents the amount to be withdrawn from the player's wallet.</param>
         /// <exception cref="ArgumentOutOfRangeException"L>When amount is negative.</exception>
         /// <exception cref="ArgumentException">When the requested amount is greater then the current balance is player's wallet.</exception>
@@ -39,7 +58,7 @@
             }
             else if (amount > Balance)
             {
-                throw new ArgumentException($"The given amount ({amount}) is more than the wallet's balance ({Balance}) ");
+                throw new ArgumentException($"The given amount ({amount}) is more than the wallet's balance ({Balance})");
             }
 
             _balance -= amount;
