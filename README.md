@@ -16,9 +16,9 @@ game that simulates a real slot game (see game rules below)
 the following rules:
     - The game accepts bets between $1 and $10
     - The game plays out as follows:
-        -  50% of the bets lose
-        - 40% of the bets win up to x2 the bet amount
-        - 10% of the bets win between x2 and x10 the bet amount
+        - *50%* of the bets lose
+        - *40%* of the bets win up to x2 the bet amount
+        - *10%* of the bets win between x2 and x10 the bet amount
     - After every round the player balance is calculated as follows:
 **{new balance} = {old balance} - {bet amount} + {win amount}**
     - The game ends when the player decides to leave
