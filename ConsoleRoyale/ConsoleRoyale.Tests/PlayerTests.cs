@@ -7,50 +7,57 @@ namespace ConsoleRoyale.Tests
     [TestClass]
     public class PlayerTests
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private Player _player;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _player = new Player();
+        }
 
         [TestMethod]
         public void DepositToWallet_Should_Add_Amount_Correctly()
         {
             var player = new Player();
-            player.DepositToWallet(10);
+            _player.DepositToWallet(10);
 
-            Assert.AreEqual(10, player.Balance);
+            Assert.AreEqual(10, _player.Balance);
 
-            player.DepositToWallet(10);
-            Assert.AreEqual(20, player.Balance);
+            _player.DepositToWallet(10);
+            Assert.AreEqual(20, _player.Balance);
 
-            player.DepositToWallet(5);
-            Assert.AreEqual(25, player.Balance);
+            _player.DepositToWallet(5);
+            Assert.AreEqual(25, _player.Balance);
         }
 
         [TestMethod]
         public void GetBalance_Should_Return_Correctly()
         {
-            var player = new Player();
-            player.DepositToWallet(10);
+            _player.DepositToWallet(10);
 
-            Assert.AreEqual(10, player.GetBalance());
+            Assert.AreEqual(10, _player.GetBalance());
 
-            player.DepositToWallet(10);
-            Assert.AreEqual(20, player.GetBalance());
+            _player.DepositToWallet(10);
+            Assert.AreEqual(20, _player.GetBalance());
 
-            player.DepositToWallet(5);
-            Assert.AreEqual(25, player.GetBalance());
+            _player.DepositToWallet(5);
+            Assert.AreEqual(25, _player.GetBalance());
         }
 
         [TestMethod]
         public void DepositToWallet_Should_Fail_When_Negative_Amount_Given()
         {
-            var player = new Player();
-
-            Assert.ThrowsException<ArgumentException>(() => player.DepositToWallet(-10));
+            Assert.ThrowsException<ArgumentException>(
+                () => _player.DepositToWallet(-10));
         }
 
         [TestMethod]
         public void DepositToWallet_Should_Fail_With_Meaningfull_Message_When_Negative_Amount_Given()
         {
-            var player = new Player();
-            Assert.ThrowsException<ArgumentException>(() => player.DepositToWallet(-10), $"The deposited amount cannot be below 0. Given amount is -10");
+            Assert.ThrowsException<ArgumentException>(
+                () => _player.DepositToWallet(-10), $"The deposited amount cannot be below 0. Given amount is -10");
         }
     }
 }
