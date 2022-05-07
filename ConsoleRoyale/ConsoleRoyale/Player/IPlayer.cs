@@ -18,5 +18,12 @@
         /// <param name="amount">An amount that should be added to the player's wallet.</param>
         /// <returns>The new amount available after the addition.</returns>
         decimal DepositToWallet(decimal amount);
+
+        /// <summary>
+        /// Withdraw given amount from the player's waller
+        /// </summary>
+        /// <param name="amount">The amount to withdraw.</param>
+        /// <returns>The amount after the withdrawal.</returns>
+        decimal Withdraw(decimal amount);
     }
 }

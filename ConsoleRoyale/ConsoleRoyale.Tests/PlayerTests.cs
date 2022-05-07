@@ -59,5 +59,27 @@ namespace ConsoleRoyale.Tests
             Assert.ThrowsException<ArgumentException>(
                 () => _player.DepositToWallet(-10), $"The deposited amount cannot be below 0. Given amount is -10");
         }
+
+        [TestMethod]
+        public void Withdraw_Should_Work_Correctly()
+        {
+            _player.DepositToWallet(25);
+            _player.Withdraw(10);
+
+            Assert.AreEqual(15, _player.GetBalance());
+        }
+
+        [TestMethod]
+        public void Withdraw_Should_Fail_When_Given_Amount_Is_Negative()
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _player.Withdraw(-10));
+        }
+
+        [TestMethod]
+        public void Withdraw_Should_Fail_When_Amount_Is_Greater_Then_Current_Balance()
+        {
+            _player.DepositToWallet(100);
+            Assert.ThrowsException<ArgumentException>(() => _player.Withdraw(200));
+        }
     }
 }
