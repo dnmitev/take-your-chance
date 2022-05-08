@@ -19,9 +19,16 @@ namespace ConsoleRoyale.RNG
             _randomNumberGenerator = RandomNumberGenerator.Create();
         }
 
+        /// <summary>
+        /// Get % based on TRNG
+        /// </summary>
+        /// <returns>A whole number as %,i.e. 12</returns>
         public int GetPercentageChance() => RandomNumberGenerator.GetInt32(1, 101);
 
-
+        /// <summary>
+        /// Gets random double using TRNG
+        /// </summary>
+        /// <returns>A random double in the interval (0, 1)</returns>
         public double GetRandomDouble()
         {
             /// This method is taken from a StackOverflow post:
@@ -38,6 +45,12 @@ namespace ConsoleRoyale.RNG
             return d;
         }
 
+        /// <summary>
+        /// Gets a random double number in a given interval where the interval is closed open [start, end)
+        /// </summary>
+        /// <param name="start">The start of the interval where it is inclusive</param>
+        /// <param name="end">The interval's end where it is exclusive</param>
+        /// <returns></returns>
         public double GetRandomDoubleInInterval(int start, int end)
         {
             var randomIntInInteval = RandomNumberGenerator.GetInt32(start, end);
