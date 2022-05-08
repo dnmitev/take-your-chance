@@ -65,5 +65,10 @@
 
             return _balance;
         }
+
+        public override string ToString()
+        {
+            return Math.Round(_balance, 2).ToString();
+        }
     }
 }
