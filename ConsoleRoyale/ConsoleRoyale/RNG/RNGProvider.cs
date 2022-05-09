@@ -46,16 +46,16 @@ namespace ConsoleRoyale.RNG
         }
 
         /// <summary>
-        /// Gets a random double number in a given interval where the interval is closed open [start, end)
+        /// Gets a random floating-point number in a given interval where the interval is closed open [start, end)
         /// </summary>
         /// <param name="start">The start of the interval where it is inclusive</param>
         /// <param name="end">The interval's end where it is exclusive</param>
-        /// <returns></returns>
-        public double GetRandomDoubleInInterval(int start, int end)
+        /// <returns>A random floating-point number</returns>
+        public decimal GetRandomDoubleInInterval(int start, int end)
         {
             var randomIntInInteval = RandomNumberGenerator.GetInt32(start, end);
             var result = randomIntInInteval * GetRandomDouble();
-            return result < start ? start + result : result;
+            return (decimal)(result < start ? start + result : result);
         }
     }
 }

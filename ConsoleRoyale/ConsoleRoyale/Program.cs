@@ -11,9 +11,6 @@ namespace ConsoleRoyale
 
             while (true)
             {
-
-
-
                 Console.WriteLine("PLease submit your action:");
                 var action = Console.ReadLine();
 

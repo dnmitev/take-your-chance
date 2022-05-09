@@ -86,5 +86,12 @@ namespace ConsoleRoyale.Tests
             Assert.ThrowsException<ArgumentException>(
                 () => _player.Withdraw(200), $"The given amount (200) is more than the wallet's balance (100)");
         }
+
+        [TestMethod]
+        public void ToString_Should_Provide_Players_Balance()
+        {
+            _player.DepositToWallet(100.53m);
+            Assert.AreEqual("100.53", _player.ToString());
+        }
     }
 }

@@ -2,8 +2,19 @@
 
 namespace ConsoleRoyale
 {
-    public class Game : IGame
+    /// <summary>
+    /// A simple game that is playable
+    /// </summary>
+    public class Game : IPlayableGame
     {
+        private const int LOW_RATE_WIN_CHANCE = 10;
+        private const int LOW_RATE_MIN_MULTIPLIER = 2;
+        private const int LOW_RATE_MAX_MULTIPLIER = 10;
+
+        private const int HIGH_RATE_WIN_CHANCE = 40;
+        private const int HIGH_RATE_MIN_MULTIPLIER = 1;
+        private const int HIGH_RATE_MAX_MULTIPLIER = 2;
+
         private readonly IPlayer _player;
         private readonly IRNGProvider _rngProvider;
 
@@ -13,6 +24,11 @@ namespace ConsoleRoyale
             _rngProvider = rngProvider;
         }
 
+        /// <summary>
+        /// Play a game with given bet.
+        /// </summary>
+        /// <param name="bet">The bettet amount</param>
+        /// <returns>The winning amount or 0 if player lost the bet</returns>
         public decimal Play(decimal bet)
         {
             var chance = _rngProvider.GetPercentageChance();
@@ -20,15 +36,15 @@ namespace ConsoleRoyale
 
             _player.Withdraw(bet);
 
-            if (chance <= 10)
+            if (chance <= LOW_RATE_WIN_CHANCE)
             {
-                win = bet * (decimal)_rngProvider.GetRandomDoubleInInterval(2, 10);
+                win = bet * _rngProvider.GetRandomDoubleInInterval(LOW_RATE_MIN_MULTIPLIER, LOW_RATE_MAX_MULTIPLIER);
                 _player.DepositToWallet(win);
             }
-            else if (chance < 50)
+            else if (chance <= LOW_RATE_WIN_CHANCE + HIGH_RATE_WIN_CHANCE)
             {
-                win = bet * (decimal)_rngProvider.GetRandomDoubleInInterval(1, 2);
-                _player.DepositToWallet(win);
+                win = bet * _rngProvider.GetRandomDoubleInInterval(HIGH_RATE_MIN_MULTIPLIER, HIGH_RATE_MAX_MULTIPLIER);
+                _player.DepositToWallet(win < bet ? win + bet : win);
             }
 
             return win;

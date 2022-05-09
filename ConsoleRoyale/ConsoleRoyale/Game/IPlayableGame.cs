@@ -1,6 +1,6 @@
 ﻿namespace ConsoleRoyale
 {
-    public interface IGame
+    public interface IPlayableGame
     {
         decimal Play(decimal bet);
     }
