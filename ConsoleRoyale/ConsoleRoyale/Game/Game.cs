@@ -15,13 +15,26 @@ namespace ConsoleRoyale
         private const int HIGH_RATE_MIN_MULTIPLIER = 1;
         private const int HIGH_RATE_MAX_MULTIPLIER = 2;
 
+        private const int DEFAULT_MIN_BET = 1;
+        private const int DEFAULT_MAX_BET = 10;
+
         private readonly IPlayer _player;
         private readonly IRNGProvider _rngProvider;
+
+        private readonly BetLimit _betLimit;
 
         public Game(IPlayer player, IRNGProvider rngProvider)
         {
             _player = player;
             _rngProvider = rngProvider;
+            _betLimit = new BetLimit(DEFAULT_MIN_BET, DEFAULT_MAX_BET);
+        }
+
+        public Game(IPlayer player, IRNGProvider rngProvider, BetLimit limit)
+        {
+            _player = player;
+            _rngProvider = rngProvider;
+            _betLimit = limit;
         }
 
         public IPlayer Player { get => _player; }
@@ -33,6 +46,12 @@ namespace ConsoleRoyale
         /// <returns>The winning amount or 0 if player lost the bet</returns>
         public decimal Play(decimal bet)
         {
+            if (bet < _betLimit.MinBet || bet > _betLimit.MaxBet)
+            {
+                throw new ArgumentOutOfRangeException(
+                    $"The bet should be in range [{_betLimit.MinBet}, {_betLimit.MaxBet}]");
+            }
+
             var chance = _rngProvider.GetPercentageChance();
             decimal win = 0.0m;
 

@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleRoyale.Tests
 {
@@ -69,6 +65,15 @@ namespace ConsoleRoyale.Tests
         public void Process_Should_Throw_InvalidOperationException_On_Null_Or_Empty_Command(string input)
         {
             Assert.ThrowsException<InvalidOperationException>(() => _commandProcessor.Process(input));
+        }
+
+
+        [TestMethod]
+        [DataRow("deposit boooooom")]
+        [DataRow("deposit @#$@")]
+        public void Process_Should_Throw_ArgumentException_On_Non_Number_Second_Param(string input)
+        {
+            Assert.ThrowsException<ArgumentException>(() => _commandProcessor.Process(input));
         }
     }
 }

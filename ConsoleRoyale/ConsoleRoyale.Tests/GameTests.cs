@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 
+using System;
+
 namespace ConsoleRoyale.Tests
 {
     [TestClass]
@@ -15,11 +17,9 @@ namespace ConsoleRoyale.Tests
         private const decimal DEFAULT_MULTIPLIER_UP_TO_X2 = 1.02m;
         private const decimal DEFAULT_MULTIPLIER_UP_TO_X10 = 5.3m;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private IPlayableGame _game;
         private IPlayer _player;
         private Mock<IRNGProvider> _mockRng;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 
         [TestInitialize]
@@ -157,6 +157,21 @@ namespace ConsoleRoyale.Tests
             var outcome = _game.Play(PLAYER_DEFAULT_BET);
 
             Assert.AreEqual(PLAYER_INTIAL_DEPOSIT - PLAYER_DEFAULT_BET + outcome, _player.GetBalance());
+        }
+
+        [TestMethod]
+        public void Play_Should_Throw_ArgumentOutOfRangeException_When_Bet_Out_Of_Range()
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _game.Play(15));
+        }
+
+        [TestMethod]
+        [DataRow("1")]
+        [DataRow("1000")]
+        public void Play_Should_Throw_ArgumentOutOfRangeException_When_Bet_Out_Of_Range_And_BetLimit_Given(string bet)
+        {
+            var game = new Game(_player, _mockRng.Object, new BetLimit(10, 100));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => game.Play(decimal.Parse(bet)));
         }
     }
 }

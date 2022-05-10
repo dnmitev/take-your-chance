@@ -28,9 +28,13 @@
                 return new Command(cmd);
             }
 
-            var value = decimal.Parse(parsedCommand[1]);
+            var value = 0.0m;
+            if (!decimal.TryParse(parsedCommand[1], out value))
+            {
+                throw new ArgumentException(input, "Invalid ammount in command.");
+            }
 
-            return new Command(cmd,value);
+            return new Command(cmd, value);
         }
     }
 }

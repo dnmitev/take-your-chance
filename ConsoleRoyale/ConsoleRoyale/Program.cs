@@ -10,9 +10,38 @@ namespace ConsoleRoyale
             var rng = new RNGProvider();
             var game = new Game(player, rng);
             var cmdProcessor = new SimpleCommandProcessor();
-            var consoleGameEngine = new ConsoleGameEngine(game, cmdProcessor);
+            var retriever = new ConsoleRetriever();
+            var output = new ConsoleOutput();
+            var consoleGameEngine = new ConsoleGameEngine(game, cmdProcessor, retriever, output);
 
-            consoleGameEngine.Start();
+            var shoudlPlayGame = true;
+            while (shoudlPlayGame)
+            {
+                try
+                {
+                    shoudlPlayGame = consoleGameEngine.Run();
+                }
+                catch (ArgumentNullException ex)
+                {
+                    output.Write(ex.Message);
+                    continue;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    output.Write(ex.Message);
+                    continue;
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    output.Write(ex.Message);
+                    continue;
+                }
+                catch (ArgumentException ex)
+                {
+                    output.Write(ex.Message);
+                    continue;
+                }
+            }
         }
     }
 }

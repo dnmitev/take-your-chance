@@ -17,5 +17,10 @@
         public string Action { get; private set; }
 
         public decimal Amount { get; private set; }
+
+        public override string ToString()
+        {
+            return $"{Action} {Amount}";
+        }
     }
 }

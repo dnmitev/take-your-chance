@@ -7,9 +7,7 @@ namespace ConsoleRoyale.Tests
     [TestClass]
     public class PlayerTests
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private Player _player;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         [TestInitialize]
         public void Setup()
