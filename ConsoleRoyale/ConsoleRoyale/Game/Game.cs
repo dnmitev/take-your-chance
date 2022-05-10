@@ -24,6 +24,8 @@ namespace ConsoleRoyale
             _rngProvider = rngProvider;
         }
 
+        public IPlayer Player { get => _player; }
+
         /// <summary>
         /// Play a game with given bet.
         /// </summary>
