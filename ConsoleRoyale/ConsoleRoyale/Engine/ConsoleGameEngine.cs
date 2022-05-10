@@ -33,13 +33,7 @@
         /// </summary>
         /// <returns>A bool to decide to continue or not.</returns>
         public bool Run()
-        {
-            if (_game.Player.GetBalance() <= 0)
-            {
-                _output.Write("Player does not have enough funding in the wallet to play");
-                return false;
-            }
-
+        {           
             _output.Write(DEFAULT_MESSAGE);
 
             var input = _retriever.RetrieveInput();
